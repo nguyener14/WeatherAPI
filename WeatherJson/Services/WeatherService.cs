@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Text.RegularExpressions;
+
 using WeatherAPI.Models;
 
 namespace WeatherAPI.Services
@@ -9,7 +9,7 @@ namespace WeatherAPI.Services
         private readonly HttpClient _httpClient;
         private readonly Dictionary<string, string> _cityUrls;
         private readonly ILogger<WeatherService> _logger;
-        private const string OutputFilePath = "wwwroot/weather_report.json";
+        private const string OutputFilePath = "output/weather_report.json";
 
         public WeatherService(HttpClient httpClient, ILogger<WeatherService> logger, IConfiguration configuration) 
         {
