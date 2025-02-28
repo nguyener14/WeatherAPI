@@ -8,36 +8,49 @@ namespace WeatherAPI.Services
     {
         private readonly HttpClient _httpClient;
         private readonly Dictionary<string, string> _cityUrls;
+        private readonly ILogger<WeatherService> _logger;
         private const string OutputFilePath = "wwwroot/weather_report.json";
 
-        public WeatherService(HttpClient httpClient) 
+        public WeatherService(HttpClient httpClient, ILogger<WeatherService> logger, IConfiguration configuration) 
         {
             _httpClient = httpClient;
+            _logger = logger;
 
             _cityUrls = new Dictionary<string, string>
             {
-                { "Los Angeles", "URL_FOR_LOS_ANGELES" },
-                { "New York", "URL_FOR_NEW_YORK" },
-                { "London", "URL_FOR_LONDON" }
+                { "Los Angeles", configuration["WeatherApiUrls:LosAngeles"] },
+                { "New York", configuration["WeatherApiUrls:NewYork"] },
+                { "London", configuration["WeatherApiUrls:London"] }
             };
         }
 
         public async Task<string> GenerateWeatherReport()
         {
-            var weatherData = await GetWeatherData();
-            var lowestMinTemps = GetLowestMinTemps(weatherData);
-
-            string jsonResult = JsonConvert.SerializeObject(lowestMinTemps);
-
-            var directory = Path.GetDirectoryName(OutputFilePath);
-            if(!Directory.Exists(directory))
+            try
             {
-                Directory.CreateDirectory(directory);
+                _logger.LogInformation("Generating Report");
+                var weatherData = await GetWeatherData();
+                var lowestMinTemps = GetLowestMinTemps(weatherData);
+
+                string jsonResult = JsonConvert.SerializeObject(lowestMinTemps);
+
+                var directory = Path.GetDirectoryName(OutputFilePath);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                _logger.LogInformation($"Weather report successfully generated.");
+
+                await File.WriteAllTextAsync(OutputFilePath, jsonResult);
+
+                return jsonResult;
             }
-
-            await File.WriteAllTextAsync(OutputFilePath, jsonResult);
-
-            return jsonResult;
+            catch(Exception ex)
+            {
+                _logger.LogError("There was an error generating the report.");
+                return string.Empty;
+            }
+            
         }
 
         private async Task<List<CityWeather>> GetWeatherData()
@@ -46,28 +59,47 @@ namespace WeatherAPI.Services
 
             foreach(var (city, url) in _cityUrls)
             {
-                var response = await _httpClient.GetStringAsync(url);
-                var weatherReponse = JsonConvert.DeserializeObject<WeatherResponse>(response);
-
-                foreach(var weather in weatherReponse.ConsolidatedWeather)
+                try
                 {
-                    var cityWeatherData = new CityWeather
+                    var response = await _httpClient.GetStringAsync(url);
+                    var weatherReponse = JsonConvert.DeserializeObject<WeatherResponse>(response);
+
+                    foreach (var weather in weatherReponse.ConsolidatedWeather)
                     {
-                        City = city,
-                        Date = weather.ApplicableDate,
-                        MinTemp = weather.MinTemp,
-                        MaxTemp = weather.MaxTemp,
-                        FullWeatherData = weather,
-                    };
-                    allWeatherData.Add(cityWeatherData);
+                        var cityWeatherData = new CityWeather
+                        {
+                            City = city,
+                            Date = weather.ApplicableDate,
+                            MinTemp = weather.MinTemp,
+                            MaxTemp = weather.MaxTemp,
+                            FullWeatherData = weather,
+                        };
+                        allWeatherData.Add(cityWeatherData);
+                    }
                 }
+                catch (HttpRequestException ex)
+                {
+                    _logger.LogError(ex, "Failed to fetch data from {City}", city);
+                }
+                catch(JsonException ex)
+                {
+                    _logger.LogError(ex, "Failed to parse JSON for {City}", city);
+                }
+                catch(Exception ex)
+                {
+                    _logger.LogError(ex, "Unexpected error for {City}", city);
+                }
+                
             }
             return allWeatherData;
         }
 
         private List<DailyCityWeather> GetLowestMinTemps(List<CityWeather> allWeatherData)
         {
-            return allWeatherData.GroupBy(d => d.Date).
+            try
+            {
+                _logger.LogInformation("Processing weather data...");
+                return allWeatherData.GroupBy(d => d.Date).
                 Select(group =>
                 {
                     var lowestTempCity = group.OrderBy(w => w.MinTemp).First();
@@ -80,6 +112,13 @@ namespace WeatherAPI.Services
                         FullWeatherData = lowestTempCity.FullWeatherData
                     };
                 }).OrderBy(d => d.Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to process weather data.");
+                return new List<DailyCityWeather>();
+            }
+            
         }
     }
 }

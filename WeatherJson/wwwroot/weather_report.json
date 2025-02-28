@@ -1,0 +1,140 @@
+[
+  {
+    "City": "New York",
+    "Date": "2019-03-28T00:00:00",
+    "MinTemp": 0.195,
+    "MaxTemp": 5.97,
+    "FullWeatherData": {
+      "id": 5838918358401024,
+      "weather_state_name": "Light Cloud",
+      "weather_state_abbr": "lc",
+      "wind_direction_compass": "S",
+      "created": "2019-03-28T16:44:44.722535Z",
+      "applicable_date": "2019-03-28T00:00:00",
+      "min_temp": 0.195,
+      "max_temp": 5.97,
+      "the_temp": 5.29,
+      "wind_speed": 6,
+      "wind_direction": 174,
+      "air_pressure": 1030.8200000000002,
+      "humidity": 72,
+      "visibility": 15,
+      "predictability": 70
+    }
+  },
+  {
+    "City": "London",
+    "Date": "2019-03-29T00:00:00",
+    "MinTemp": 2.6300000000000003,
+    "MaxTemp": 17.42,
+    "FullWeatherData": {
+      "id": 6158451006767104,
+      "weather_state_name": "Clear",
+      "weather_state_abbr": "c",
+      "wind_direction_compass": "SSW",
+      "created": "2019-03-28T16:44:02.152811Z",
+      "applicable_date": "2019-03-29T00:00:00",
+      "min_temp": 2.6300000000000003,
+      "max_temp": 17.42,
+      "the_temp": 14.85,
+      "wind_speed": 4,
+      "wind_direction": 210,
+      "air_pressure": 1030.205,
+      "humidity": 58,
+      "visibility": 10,
+      "predictability": 68
+    }
+  },
+  {
+    "City": "London",
+    "Date": "2019-03-30T00:00:00",
+    "MinTemp": 3.83,
+    "MaxTemp": 16.88,
+    "FullWeatherData": {
+      "id": 5139251006013440,
+      "weather_state_name": "Light Cloud",
+      "weather_state_abbr": "lc",
+      "wind_direction_compass": "W",
+      "created": "2019-03-28T16:44:02.624632Z",
+      "applicable_date": "2019-03-30T00:00:00",
+      "min_temp": 3.83,
+      "max_temp": 16.88,
+      "the_temp": 15.67,
+      "wind_speed": 2,
+      "wind_direction": 263,
+      "air_pressure": 1023.105,
+      "humidity": 59,
+      "visibility": 10,
+      "predictability": 70
+    }
+  },
+  {
+    "City": "London",
+    "Date": "2019-03-31T00:00:00",
+    "MinTemp": 5.485,
+    "MaxTemp": 11.955,
+    "FullWeatherData": {
+      "id": 5037364718075904,
+      "weather_state_name": "Light Cloud",
+      "weather_state_abbr": "lc",
+      "wind_direction_compass": "ENE",
+      "created": "2019-03-28T16:44:02.81883Z",
+      "applicable_date": "2019-03-31T00:00:00",
+      "min_temp": 5.485,
+      "max_temp": 11.955,
+      "the_temp": 11.38,
+      "wind_speed": 8,
+      "wind_direction": 63,
+      "air_pressure": 1027.325,
+      "humidity": 59,
+      "visibility": 11,
+      "predictability": 70
+    }
+  },
+  {
+    "City": "London",
+    "Date": "2019-04-01T00:00:00",
+    "MinTemp": 1.22,
+    "MaxTemp": 12.325,
+    "FullWeatherData": {
+      "id": 4961017379422208,
+      "weather_state_name": "Light Cloud",
+      "weather_state_abbr": "lc",
+      "wind_direction_compass": "NE",
+      "created": "2019-03-28T16:44:03.005036Z",
+      "applicable_date": "2019-04-01T00:00:00",
+      "min_temp": 1.22,
+      "max_temp": 12.325,
+      "the_temp": 12.19,
+      "wind_speed": 3,
+      "wind_direction": 54,
+      "air_pressure": 1030.115,
+      "humidity": 54,
+      "visibility": 15,
+      "predictability": 70
+    }
+  },
+  {
+    "City": "London",
+    "Date": "2019-04-02T00:00:00",
+    "MinTemp": 2.035,
+    "MaxTemp": 12.565,
+    "FullWeatherData": {
+      "id": 5559481041682432,
+      "weather_state_name": "Light Cloud",
+      "weather_state_abbr": "lc",
+      "wind_direction_compass": "SW",
+      "created": "2019-03-28T16:44:04.701854Z",
+      "applicable_date": "2019-04-02T00:00:00",
+      "min_temp": 2.035,
+      "max_temp": 12.565,
+      "the_temp": 14.28,
+      "wind_speed": 6,
+      "wind_direction": 214,
+      "air_pressure": 1030.2,
+      "humidity": 62,
+      "visibility": 7,
+      "predictability": 70
+    }
+  }
+]

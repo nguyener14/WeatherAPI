@@ -5,14 +5,17 @@ using WeatherAPI.Services;
 
 namespace WeatherAPI.Controllers
 {
+    [ApiController]
+    [Route("api/weather")]
     public class WeatherController : ControllerBase
     {
         private readonly ILogger<WeatherController> _logger;
         private readonly WeatherService _weatherService;
 
-        public WeatherController(WeatherService weatherService)
+        public WeatherController(WeatherService weatherService, ILogger<WeatherController> logger)
         {
             _weatherService = weatherService;
+            _logger = logger;
         }
 
         [HttpGet("generate-json")]
